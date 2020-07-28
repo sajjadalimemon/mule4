@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="es" format="json">
+      <types:shape format="weave" example="examples/es.json"><![CDATA[%dw 2.0
+
+type es = {|
+  took: Number {"typeId": "int"}, 
+  timed_out: Boolean, 
+  "_shards": {|
+    total: Number {"typeId": "int"}, 
+    successful: Number {"typeId": "int"}, 
+    failed: Number {"typeId": "int"}
+  |}, 
+  hits: {|
+    total: Number {"typeId": "int"}, 
+    max_score: Null, 
+    hits: Array<{|      "_index": String,       "_type": String,       "_id": String,       "_score": Null,       "_source": {|        CUST_CD: String,         ST_CD: String,         ZONE_CD: String,         FNAME: String,         LNAME: String,         ADDR1: String,         ADDR2: String,         CITY: String,         ZIP_CD: String,         HOME_PHONE: String,         BUS_PHONE: String,         CO_CD: String,         ACCT_OPN_DT: String,         STREET: String,         EMAIL_ADDR: String,         DO_NOT_CONTACT: Null,         CREATED_DATE: String,         UPDATED_DATE: String,         MDFD_DT_LOGSELECTRONICADDRESS: Null,         MDFD_DT_LOGPOSTALADDRESS: Null,         MDFD_DT_RETAILCUSTTABLE: Null,         VENDACCOUNT: String,         COUNTY: String,         STOREID: String,         ISMOBILEPHONE: Null,         ES_MODIFIEDDATETIME: String      |},       sort: Array<Number {"typeId": "double"} | String>
+    |}>
+  |}
+|} {"example": "{\"took\":361,\"timed_out\":false,\"_shards\":{\"total\":5,\"successful\":5,\"failed\":0},\"hits\":{\"total\":18016470,\"max_score\":null,\"hits\":[{\"_index\":\"cust\",\"_type\":\"cust_type\",\"_id\":\"SLP-18001175Z1_SLP\",\"_score\":null,\"_source\":{\"CUST_CD\":\"SLP-18001175Z1\",\"ST_CD\":\"NY\",\"ZONE_CD\":\"\",\"FNAME\":\"1-800-SLEEPYS\",\"LNAME\":\"1-800-SLEEPYS\",\"ADDR1\":\"175 CENTRAL AVE SOUTH\",\"ADDR2\":\"\",\"CITY\":\"BETHPAGE\",\"ZIP_CD\":\"11714\",\"HOME_PHONE\":\"2221111111\",\"BUS_PHONE\":\"\",\"CO_CD\":\"SLP\",\"ACCT_OPN_DT\":\"1998\/10\/24\",\"STREET\":\"\",\"EMAIL_ADDR\":\"\",\"DO_NOT_CONTACT\":null,\"CREATED_DATE\":\"2019\/01\/29 17:55:47\",\"UPDATED_DATE\":\"2019\/01\/29 17:55:47\",\"MDFD_DT_LOGSELECTRONICADDRESS\":null,\"MDFD_DT_LOGPOSTALADDRESS\":null,\"MDFD_DT_RETAILCUSTTABLE\":null,\"VENDACCOUNT\":\"\",\"COUNTY\":\"\",\"STOREID\":\"G\",\"ISMOBILEPHONE\":null,\"ES_MODIFIEDDATETIME\":\"2019\/02\/14 06:04:10\"},\"sort\":[1550124250000,\"SLP-18001175Z1\"]},{\"_index\":\"cust\",\"_type\":\"cust_type\",\"_id\":\"SLP-18639ZZZZ1_SLP\",\"_score\":null,\"_source\":{\"CUST_CD\":\"SLP-18639ZZZZ1\",\"ST_CD\":\"NJ\",\"ZONE_CD\":\"\",\"FNAME\":\"REIDEL\",\"LNAME\":\"KEITH\",\"ADDR1\":\"9 WILTSHIRE DRIVE\",\"ADDR2\":\"\",\"CITY\":\"BOONTON\",\"ZIP_CD\":\"07005\",\"HOME_PHONE\":\"9735601669\",\"BUS_PHONE\":\"9733166205\",\"CO_CD\":\"SLP\",\"ACCT_OPN_DT\":\"1999\/08\/28\",\"STREET\":\"\",\"EMAIL_ADDR\":\"\",\"DO_NOT_CONTACT\":null,\"CREATED_DATE\":\"2019\/01\/29 17:55:47\",\"UPDATED_DATE\":\"2019\/01\/29 17:55:47\",\"MDFD_DT_LOGSELECTRONICADDRESS\":null,\"MDFD_DT_LOGPOSTALADDRESS\":null,\"MDFD_DT_RETAILCUSTTABLE\":null,\"VENDACCOUNT\":\"\",\"COUNTY\":\"\",\"STOREID\":\"G\",\"ISMOBILEPHONE\":null,\"ES_MODIFIEDDATETIME\":\"2019\/02\/14 06:04:10\"},\"sort\":[1550124250000,\"SLP-18639ZZZZ1\"]},{\"_index\":\"cust\",\"_type\":\"cust_type\",\"_id\":\"SLP-3109507ZZ2_SLP\",\"_score\":null,\"_source\":{\"CUST_CD\":\"SLP-3109507ZZ2\",\"ST_CD\":\"CT\",\"ZONE_CD\":\"\",\"FNAME\":\"ANITA\",\"LNAME\":\"CARIATI\",\"ADDR1\":\"507 BROWNSTONE RIDGE\",\"ADDR2\":\"\",\"CITY\":\"MERIDEN\",\"ZIP_CD\":\"06450\",\"HOME_PHONE\":\"NONE\",\"BUS_PHONE\":\"NONE\",\"CO_CD\":\"SLP\",\"ACCT_OPN_DT\":\"1999\/08\/28\",\"STREET\":\"\",\"EMAIL_ADDR\":\"\",\"DO_NOT_CONTACT\":null,\"CREATED_DATE\":\"2019\/01\/29 17:55:47\",\"UPDATED_DATE\":\"2019\/01\/29 17:55:47\",\"MDFD_DT_LOGSELECTRONICADDRESS\":null,\"MDFD_DT_LOGPOSTALADDRESS\":null,\"MDFD_DT_RETAILCUSTTABLE\":null,\"VENDACCOUNT\":\"\",\"COUNTY\":\"\",\"STOREID\":\"G\",\"ISMOBILEPHONE\":null,\"ES_MODIFIEDDATETIME\":\"2019\/02\/14 06:04:10\"},\"sort\":[1550124250000,\"SLP-3109507ZZ2\"]},{\"_index\":\"cust\",\"_type\":\"cust_type\",\"_id\":\"SLP-426176ZZZ4_SLP\",\"_score\":null,\"_source\":{\"CUST_CD\":\"SLP-426176ZZZ4\",\"ST_CD\":\"NY\",\"ZONE_CD\":\"\",\"FNAME\":\"VEDYAWATI\",\"LNAME\":\"PERSAUD\",\"ADDR1\":\"76-08 PITKIN AVENUE\",\"ADDR2\":\"\",\"CITY\":\"OZONE PARK\",\"ZIP_CD\":\"11417\",\"HOME_PHONE\":\"7187387661\",\"BUS_PHONE\":\"\",\"CO_CD\":\"SLP\",\"ACCT_OPN_DT\":\"1999\/08\/28\",\"STREET\":\"\",\"EMAIL_ADDR\":\"\",\"DO_NOT_CONTACT\":null,\"CREATED_DATE\":\"2019\/01\/29 17:55:47\",\"UPDATED_DATE\":\"2019\/01\/29 17:55:47\",\"MDFD_DT_LOGSELECTRONICADDRESS\":null,\"MDFD_DT_LOGPOSTALADDRESS\":null,\"MDFD_DT_RETAILCUSTTABLE\":null,\"VENDACCOUNT\":\"\",\"COUNTY\":\"\",\"STOREID\":\"G\",\"ISMOBILEPHONE\":null,\"ES_MODIFIEDDATETIME\":\"2019\/02\/14 06:04:10\"},\"sort\":[1550124250000,\"SLP-426176ZZZ4\"]},{\"_index\":\"cust\",\"_type\":\"cust_type\",\"_id\":\"SLP-ABANC180Z1_SLP\",\"_score\":null,\"_source\":{\"CUST_CD\":\"SLP-ABANC180Z1\",\"ST_CD\":\"NY\",\"ZONE_CD\":\"\",\"FNAME\":\"ERIC\",\"LNAME\":\"REUTER\",\"ADDR1\":\"35-06 169TH ST\",\"ADDR2\":\"APT 4-D\",\"CITY\":\"FLUSHING\",\"ZIP_CD\":\"11358\",\"HOME_PHONE\":\"6312756108\",\"BUS_PHONE\":\"6312756108\",\"CO_CD\":\"SLP\",\"ACCT_OPN_DT\":\"1998\/10\/05\",\"STREET\":\"\",\"EMAIL_ADDR\":\"\",\"DO_NOT_CONTACT\":null,\"CREATED_DATE\":\"2019\/01\/29 17:55:47\",\"UPDATED_DATE\":\"2019\/01\/29 17:55:47\",\"MDFD_DT_LOGSELECTRONICADDRESS\":null,\"MDFD_DT_LOGPOSTALADDRESS\":null,\"MDFD_DT_RETAILCUSTTABLE\":null,\"VENDACCOUNT\":\"\",\"COUNTY\":\"\",\"STOREID\":\"G\",\"ISMOBILEPHONE\":null,\"ES_MODIFIEDDATETIME\":\"2019\/02\/14 06:04:10\"},\"sort\":[1550124250000,\"SLP-ABANC180Z1\"]}]}}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="es_output" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+
+type: object
+
+properties:
+  customerID:
+    type: number
+    required: true
+  firstName:
+  lastName:
+  address:
+  city:
+  state:
+    enum: [NC, AL, SC, TN, TX, MS, LA, OK, MS, OH]
+  zipCode:
+  phoneNumbers:
+    type: array
+    items: 
+      type: object
+      properties:
+        phoneDescription:
+          enum: [home, office, mobile, cell, work, other]
+        phoneNumber:
+  emailAddresses:
+    type: array
+    items: 
+      type: object
+      properties:
+        emailAddress:]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#c0129396-2710-4988-922a-ccaa9f432333">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="es"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="es_output"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

@@ -1,0 +1,172 @@
+#%RAML 1.0
+version: v1
+title: elastic-search-system-api
+types:
+  order: !include datatype/orderheaderswithlineitems.raml
+  customerContactInfo: 
+    properties:
+      customerID:
+        type: number
+        required: true
+      firstName:
+      lastName:
+      address:
+      city:
+      state:
+        enum: [NC, AL, SC, TN, TX, MS, LA, OK, MS, OH]
+      zipCode:
+      phoneNumbers:
+        type: array
+        items:
+          type: object
+          properties:
+            phoneDescription:
+              enum: [home, office, mobile, cell, work, other]
+            phoneNumber:
+            
+      emailAddresses:
+        type: array
+        items: 
+          type: object
+          properties:
+            emailAddress:
+    example:
+      customerID: 123
+      firstName: Sonya
+      lastName: McNeal
+      address: 123 Main 
+      city: Charlotte
+      state: NC
+      zipCode: "24285"
+      phoneNumbers: 
+        -
+          phoneDescription: home
+          phoneNumber: 704-555-1212
+      emailAddresses: 
+        - emailAddress: sonya@mulelearning.com
+/customer:
+  get:
+    queryParameters:
+      zipCode:
+        required: false
+        description: Returns all the customers for a given zip code
+      firstName:
+        required: false
+      lastName: 
+        required: false
+      phone:
+        required: false
+      email:
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: array
+            items: 
+              type: customerContactInfo
+      400:
+        body:
+          application/json:
+            example: 
+              errorMessage: some error occured
+
+  /{customerID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: object
+              properties:
+                contactInfo:
+                  type: customerContactInfo   
+    /salesHistory:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: order
+    /products:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    productID:
+                    productDescription:
+                    pricePurchased:
+                    datePurchased:
+                    storePurchased:
+                      description: store that the item was purchased from
+    /storeVisitHistory:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    storeID:
+                    visitDate:
+    /webSiteBrowseHistory:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    visitDate:
+                    pageVisited:
+                    productsSeen:
+                      type: array
+                      items: 
+                        type: object
+                        properties:
+                          productId:
+                          productDescription:
+    /webSiteSearchHistory:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    searchText:
+                    searchDate:
+
+    /demographics:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: object
+                properties: 
+                  zipCode:
+                  income: 
+                  maritalStatus:
+                  age:
+                  race:
+                  gender:
+                  crimeRisk:
+                  education:
+                  religion:
+                  familySize:
+                  employmentStatus:
+                  employmentIndustry:
+                  householdOwnershipStatus:
+              

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="ac2335f5-54b4-43d6-be8a-634fb9091e36" >
+		<http:request-connection host="vpc-ticketdetail-mfrm-2nsf3ogk2vjyylzbauxlqvrgta.us-west-2.es.amazonaws.com" port="80" />
+	</http:request-config>
+	<flow name="SearchCustomer" doc:id="cf73765c-d331-4a9d-a4f8-f4ee5f6deafa" >
+		<set-variable value='cust/_search?source_content_type=application/json&amp;pretty&amp;source={"query": {"bool": {"must":[{"match": {"CUST_CD" :"SLP-18001175Z1"}},{"bool": {"should": [{"range":{"ES_MODIFIEDDATETIME":{"gte":"2018/12/11 08:01:20"}}}]}}]}},"search_after": [1535579758000,"30S12230"],"sort": [{"ES_MODIFIEDDATETIME":"asc"},{"CUST_CD.keyword":"asc"}],"size":1}' doc:name="Set Variable" doc:id="88fcf629-d5ba-4bb4-9851-67fcca8877df" variableName="es_var" />
+		<ee:transform doc:name="Transform Message" doc:id="511569a6-0476-4ecd-a21c-0e4414418823" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="esFinalQuery" ><![CDATA[%dw 2.0
+output application/java
+var esFinalQuery = (query) -> 
+	 query replace "{" with "%7B" 
+	 replace "\"" with "%22" 
+	 replace "}" with "%7D"
+	 replace "[" with "%5B"
+	 replace "]" with "%5D"
+---
+
+esFinalQuery(vars.es_var)]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<http:request method="GET" doc:name="Request" doc:id="279519c6-eb10-4bfe-a1fc-08bfae4cc77b" config-ref="HTTP_Request_configuration" path="#[vars.esFinalQuery]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="dcc8cf20-90d5-474f-9876-acb90aa85b2d" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="c0129396-2710-4988-922a-ccaa9f432333" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{"customerID":payload.hits.hits[0]."_source".CUST_CD,
+ firstName: payload.hits.hits[0]."_source".FNAME,
+	lastName: payload.hits.hits[0]."_source".LNAME,
+	address: payload.hits.hits[0]."_source".ADDR1 ,
+   
+	city: payload.hits.hits[0]."_source".CITY,
+	zipCode: payload.hits.hits[0]."_source".ZIP_CD,
+	emailAddresses: payload.hits.hits[0]."_source".EMAIL_ADDR
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="396f164f-a45f-47f4-acf7-dfd37c04f292" message="#[payload]]"/>
+	</flow>
+</mule>
